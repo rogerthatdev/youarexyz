@@ -1,9 +1,17 @@
-export default function Auth() {
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>Auth!</h1>
-        <button>Login</button>
-      </main>
-    );
-  }
-  
+import NextAuth, { AuthOptions } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+export const authOptions = {
+ providers: [
+  GoogleProvider({
+   clientId: process.env.GOOGLE_ID || '',
+   clientSecret: process.env.GOOGLE_SECRET || '',
+  }),
+ ],
+ session: {
+  strategy: 'jwt',
+ },
+} as AuthOptions;
+
+const Auth = NextAuth(authOptions);
+
+export default Auth(authOptions);
